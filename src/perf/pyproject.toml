@@ -1,0 +1,67 @@
+[project]
+name = "latency-attack"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+keywords = [
+    "llm",
+    "inference",
+    "latency",
+    "scheduling",
+    "benchmark",
+    "serving",
+    "vllm",
+    "sglang",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "aiohttp",
+    "httpx",
+    "joblib>=1.4.0",
+    "lightgbm>=4.0.0",
+    "matplotlib",
+    "numpy",
+    "openai",
+    "pandas",
+    "pyyaml",
+    "scikit-learn>=1.5.0",
+    "scipy>=1.13.0",
+    "seaborn",
+]
+
+[project.optional-dependencies]
+# Time-series backbones used by the `probe` module (MiniRocket / InceptionTime).
+ts = ["torch", "tsai", "sktime>=0.9.0"]
+# Dataset helpers used by the sample prompt loaders.
+datasets = ["datasets"]
+# Development tooling.
+dev = ["ruff>=0.8"]
+
+[tool.uv]
+# This is a source-checkout research project rather than an installable
+# distribution: modules live at the repository root (core/, utils/, probe/, ...).
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".uv_cache",
+    ".uv-cache",
+    ".uv_packages",
+    ".venv",
+]
+
+[tool.ruff.lint]
+# entry-point scripts.
+ignore = ["E402"]

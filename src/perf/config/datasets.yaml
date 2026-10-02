@@ -1,0 +1,81 @@
+base_dir: "../../datasets"
+
+# Benign datasets - used to simulate normal requests
+benign:
+  # Alpaca-format dataset
+  alpaca:
+    path: "benign/alpaca.json"
+    template: "alpaca"
+    tier: "low"
+    max_prompts: 500
+
+  # ShareGPT conversation dataset
+  sharegpt:
+    path: "benign/ShareGPT_V4.3_unfiltered_cleaned_split.json"
+    template: "chatml"
+    tier: "low"
+
+# LoopLLM attack
+loopllm:
+  qwen_8b:
+    path: "loopllm/loopllm_8B.json"
+    template: "loopllm"
+    tier: "high"
+
+  gemma:
+    path: "loopllm/loopllm_gemma3_12B.json"
+    template: "loopllm"
+    tier: "high"
+
+  deepseek:
+    path: "loopllm/loopllm_deepseek_r1_8B.json"
+    template: "loopllm"
+    tier: "high"
+
+# Engorgio attack
+engorgio:
+  qwen_8b:
+    path: "engorgio/Qwen3-8B.jsonl"
+    template: "engorgio"
+    tier: "high"
+
+  gemma:
+    path: "engorgio/Gemma3-12B.jsonl"
+    template: "engorgio"
+    tier: "high"
+
+  deepseek:
+    path: "engorgio/DeepSeek-R1-8B.jsonl"
+    template: "engorgio"
+    tier: "high"
+
+
+extend:
+  aime2024:
+    path: "benign/aime2024.json"
+    template: "extend_attack0.5"
+    tier: "high"
+    description: "AIME 2024 math competition problems"
+
+  aime2025:
+    path: "benign/aime2025.json"
+    template: "extend_attack0.5"
+    tier: "high"
+    description: "AIME 2025 math competition problems"
+
+  humaneval:
+    path: "benign/humaneval.json"
+    template: "extend_attack0.5"
+    tier: "low"
+    description: "HumanEval Python code-generation dataset"
+
+  bigcodebench:
+    path: "benign/bigcodebench.json"
+    template: "extend_attack0.5"
+    tier: "mid"
+    description: "BigCodeBench code evaluation dataset"
+
+fs_attack:
+  tiered:
+    path: "fs_attack/prompts_ranked.jsonl"
+    template: "fs_attack"

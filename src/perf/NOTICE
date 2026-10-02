@@ -1,0 +1,25 @@
+latency-attack
+Copyright 2026 The latency-attack Authors
+
+This product includes software developed at other projects and organisations.
+The following third-party components are used by, or are built upon by, this
+repository. They are distributed under their own licenses; when this repository
+redistributes modified copies of their source code, the original license and
+attribution notice are retained alongside the modified files.
+
+--------------------------------------------------------------------------------
+vLLM (https://github.com/vllm-project/vllm)
+License: Apache License 2.0
+Modified source files, when present under src/vllm/modified_code/, are derived
+from vLLM and remain subject to the Apache License 2.0.
+
+--------------------------------------------------------------------------------
+SGLang (https://github.com/sgl-project/sglang)
+License: Apache License 2.0
+Modified source files, when present under src/sglang/modified_code/, are derived
+from SGLang and remain subject to the Apache License 2.0.
+
+--------------------------------------------------------------------------------
+Datasets referenced by config/datasets.yaml (e.g. Alpaca, ShareGPT, AIME,
+HumanEval, BigCodeBench) are not redistributed by this repository. Users are
+responsible for obtaining them under their respective licenses.

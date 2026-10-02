@@ -1,0 +1,11 @@
+**/.DS_Store
+.DS_Store
+.vscode/
+.venv
+.venv/*
+.ruff_cache
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+results/
+uv.lock

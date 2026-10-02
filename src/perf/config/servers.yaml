@@ -1,0 +1,21 @@
+# Model server configuration.
+
+servers:
+  local:
+    name: "Local vLLM server"
+    api_url: "http://localhost:8080/v1/chat/completions"
+    api_key: ""
+    fetch_model: true
+    scheduler_version: "vllm"
+
+  # Example remote deployment. Override the endpoint with the REMOTE_API_URL
+  # environment variable instead of committing a private address.
+  remote:
+    name: "Remote server"
+    api_url: "${REMOTE_API_URL:-http://localhost:8080/v1/chat/completions}"
+    api_key: ""
+    fetch_model: true
+    scheduler_version: "vllm"
+
+# Server used by default.
+default: "local"

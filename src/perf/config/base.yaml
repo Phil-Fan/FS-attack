@@ -1,0 +1,85 @@
+# Base configuration - defaults shared by all experiments.
+
+# Server configuration (selected from servers.yaml)
+server: "local"
+
+# Experiment configuration
+experiment:
+  duration: 60
+  output_dir: "output"
+  warmup_prompt: "Hello, introduce yourself briefly in 100 words."
+  warmup_count: 30           # number of requests per warmup user
+  warmup_users: 20           # number of parallel warmup users
+  warmup_duration: 10        # maximum warmup duration (seconds)
+  max_startup_delay: 150.0   # maximum delay used to spread user start times (seconds)
+
+# Prober configuration
+prober:
+  enabled: false
+  count: 1
+  interval: 0.1              # probe interval (seconds)
+  print: true
+  # Path to a trained probe model. Point this at your own checkpoint, or set
+  # the PROBER_MODEL_DIR environment variable, e.g.
+  #   export PROBER_MODEL_DIR=/path/to/training/model_lightgbm
+  model_dir: "${PROBER_MODEL_DIR:-probe/data/model}"
+  window_min: 30
+  window_max: 50
+
+# User configuration
+users:
+  total: 20
+  ratios:
+    # baseline: 0.2      # 20% baseline users
+    fs_attack: 0.1     # 10% Fill-and-Squeeze attack users
+    prober: 1
+
+  # Benign-user arrival pattern
+  # Option 1: Poisson process (default)
+  #   normal_base_interval: base inter-arrival time (default 1.0 s)
+  #   normal_lambda: Poisson rate parameter (default 1.0)
+  #
+  # Option 2: replay a trace file (set normal_pattern: "trace" and normal_trace_path)
+  normal_base_interval: 1.0
+  normal_lambda: 1.0
+  # normal_pattern: "trace"                  # enable trace replay
+  # normal_trace_path: "path/to/trace.json"  # trace file (JSON or plain text)
+  # normal_trace_shuffle: false              # shuffle the inter-arrival sequence
+
+  # Baseline-user configuration
+  baseline_base_interval: 1.0
+  baseline_jitter: 0.5
+
+  # Request pattern used by malicious users
+  malicious_pattern: "burst"
+
+# Fill-and-Squeeze adaptive controller (paper Sec. 4 / Appendix Algorithm 1).
+# Uses the ITL-probe estimate U_sys to form the memory gap
+# Delta_mem = C_sat - U_sys and selects the injection regime:
+#   Delta_mem >  delta_large               -> Fill       (dispatch P_High)
+#   delta_small < Delta_mem <= delta_large -> Transition (dispatch P_Mid)
+#   0 < Delta_mem <= delta_small           -> Squeeze    (dispatch P_Low)
+#   Delta_mem <= 0                         -> Back-off   (sleep t_wait)
+fs_attack_selector:
+  c_sat: 97.5            # saturation threshold C_sat (%), matches the 97.5-100% High band
+  delta_large: 47.5      # C_sat - delta_large = 50%  (Fill/Transition boundary)
+  delta_small: 17.5      # C_sat - delta_small = 80%  (Transition/Squeeze boundary)
+  t_wait: 1.0            # seconds to pause injection during Back-off
+  backoff_enabled: true  # false reproduces the "no adaptive back-off" ablation
+  max_state_age: 5.0     # seconds before a probe estimate is treated as stale
+
+# Billing / cost accounting
+billing:
+  enabled: true
+  input_cost_per_million: 0.15   # input:  $0.15 per million tokens
+  output_cost_per_million: 0.60  # output: $0.60 per million tokens
+
+# Dataset configuration
+datasets:
+  normal: "benign.alpaca"
+  baseline:
+    - "loopllm.qwen_8b"
+    - "engorgio.qwen_8b"
+  fs_attack: "fs_attack.tiered"
+  # Warmup dataset
+  warmup: "benign.alpaca"

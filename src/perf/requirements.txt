@@ -1,0 +1,19 @@
+# Core runtime dependencies for the latency-attack framework.
+# Kept in sync with the [project.dependencies] table in pyproject.toml.
+#
+# Optional time-series backbones used by the `probe` module (MiniRocket /
+# InceptionTime) are not listed here because they pull in large packages.
+# Install them separately when needed:
+#     pip install torch tsai "sktime>=0.9.0"
+aiohttp
+httpx
+joblib>=1.4.0
+lightgbm>=4.0.0
+matplotlib
+numpy
+openai
+pandas
+pyyaml
+scikit-learn>=1.5.0
+scipy>=1.13.0
+seaborn

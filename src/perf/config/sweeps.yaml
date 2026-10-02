@@ -1,0 +1,65 @@
+# Sweep configuration: declarative experiment matrices executed by the driver.
+#
+# Each sweep is a Cartesian product over the listed axes. Model checkpoints and
+# other machine-local paths are supplied through environment variables (see
+# PROBER_MODEL_DIR) so that no local paths are committed to the repository.
+
+sweeps:
+  # Default sweep used when `--sweep` is passed without a name.
+  benchmark:
+    enabled: true
+    output_dir: "output/sweeps/benchmark"
+    description: "Fill-and-Squeeze attack with baseline and tiered attack mixes."
+    durations: [1800]
+    datasets:
+      normal: ["benign.alpaca"]
+      baseline:
+        - "loopllm.qwen_8b"
+        - "engorgio.qwen_8b"
+        - "extend.aime2024"
+      fs_attack:
+        - ["fs_attack.tiered"]
+    special_ratios:
+      baseline: [0.25, 0.5, 0.75]
+      fs_attack: [0.25, 0.5, 0.75]
+    prober_counts: [0]
+    repeats: 1
+    base_overrides:
+      total: 70
+
+  # Fast smoke test of the end-to-end pipeline.
+  quick_smoke:
+    enabled: true
+    output_dir: "output/sweeps/quick_smoke"
+    description: "Fast smoke test."
+    durations: [30]
+    datasets:
+      normal: ["benign.alpaca"]
+      baseline:
+        - "loopllm.qwen_8b"
+    special_ratios:
+      baseline: [0.2]
+    prober_counts: [0]
+    repeats: 1
+    base_overrides:
+      total: 10
+
+  # Fill-and-Squeeze attack: sweeps the attack ratio with a single prober.
+  # Requires a trained probe checkpoint (set PROBER_MODEL_DIR).
+  fs_attack:
+    enabled: true
+    output_dir: "output/sweeps/fs_attack"
+    description: "Fill-and-Squeeze attack across several ratios."
+    durations: [1800]
+    datasets:
+      normal: ["benign.alpaca"]
+      fs_attack: ["fs_attack.tiered"]
+    special_ratios:
+      fs_attack: [0.75]
+    prober_counts: [1]
+    repeats: 1
+    base_overrides:
+      total: 70
+      prober:
+        interval: 0.1
+        model_dir: "${PROBER_MODEL_DIR:-probe/data/model}"

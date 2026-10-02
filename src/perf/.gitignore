@@ -1,0 +1,37 @@
+# Local run configuration / machine-specific model selection
+config/model_name
+.device
+
+# Experiment outputs and datasets
+output/
+results/
+datasets/
+**/data/
+*.log
+
+# Large third-party traces
+BurstGPT_without_fails_2.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.uv_cache/
+.uv-cache/
+.uv_packages/
+.uv.lock
+uv.lock
+.ruff_cache/
+.mypy_cache/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,15 @@
+# SGLang patch file list
+# Format: <relative destination from sglang package root> <- <source file>
+#
+# Usage: python patch.py
+#
+# This patches the following files in the sglang installation:
+#   srt/managers/scheduler.py
+#   srt/managers/schedule_policy.py
+#   srt/managers/schedule_batch.py
+#   srt/managers/scheduler_output_processor_mixin.py
+
+srt/managers/scheduler.py <- modified_code/scheduler.py
+srt/managers/schedule_policy.py <- modified_code/schedule_policy.py
+srt/managers/schedule_batch.py <- modified_code/schedule_batch.py
+srt/managers/scheduler_output_processor_mixin.py <- modified_code/scheduler_output_processor_mixin.py

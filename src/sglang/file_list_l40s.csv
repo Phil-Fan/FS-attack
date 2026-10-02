@@ -1,0 +1,8 @@
+# SGLang L40S patch file list
+# Matches the SGLang package installed in /root/miniconda3 on L40S hosts.
+# Keep separate from file_list.csv because upstream SGLang manager APIs differ.
+
+srt/managers/scheduler.py <- modified_code_l40s/scheduler.py
+srt/managers/schedule_policy.py <- modified_code_l40s/schedule_policy.py
+srt/managers/schedule_batch.py <- modified_code_l40s/schedule_batch.py
+srt/managers/scheduler_output_processor_mixin.py <- modified_code_l40s/scheduler_output_processor_mixin.py
